@@ -4,7 +4,7 @@ import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
 import { use } from "react";
-import { useKeenSlider } from "keen-slider/react"
+import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 
 const HotCollections = () => {
@@ -18,21 +18,28 @@ const HotCollections = () => {
     },
   });
 
+  async function getCollections() {
+    const { data } = await axios.get(
+      `https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections`
+    );
 
-async function getCollections() {
-  const { data } = await axios.get(
-    `https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections`);
-
-      setCollections(data);
+    setCollections(data);
   }
 
   useEffect(() => {
     getCollections();
   }, []);
 
-
   return (
     <section id="section-collections" className="no-bottom">
+      {/* Left Arrow */}
+      <button
+        onClick={() => instanceRef.current?.prev()}
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white shadow-lg p-3 rounded-full z-20"
+      >
+        ◀
+      </button>
+
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -42,56 +49,50 @@ async function getCollections() {
             </div>
           </div>
           <div className="relative">
-               {/* Left Arrow */}
-          <button 
-      
-          onClick={() => instanceRef.current?.prev()}
-         className="absolute left-4 top-1/2 -translate-y-1/2 bg-white shadow-lg p-3 rounded-full z-20">
-          ◀
-        </button>
-
             {/* Carousel */}
             <div ref={sliderRef} className="keen-slider">
-            {collections.map((collection) => (
-              <div key={collection.id} className="keen-slider__slide">
-                
-              <div className="nft_coll">
-                <div className="nft_wrap">
-                  <Link to="/item-details">
-                    <img src={collection.nftImage} className="lazy img-fluid" alt="" />
-                  </Link>
+              {collections.map((collection) => (
+                <div key={collection.id} className="keen-slider__slide">
+                  <div className="nft_coll">
+                    <div className="nft_wrap">
+                      <Link to="/item-details">
+                        <img
+                          src={collection.nftImage}
+                          className="lazy img-fluid"
+                          alt=""
+                        />
+                      </Link>
+                    </div>
+                    <div className="nft_coll_pp">
+                      <Link to="/author">
+                        <img
+                          className="lazy pp-coll"
+                          src={collection.authorImage}
+                          alt=""
+                        />
+                      </Link>
+                      <i className="fa fa-check"></i>
+                    </div>
+                    <div className="nft_coll_info">
+                      <Link to="/explore">
+                        <h4>{collection.title}</h4>
+                      </Link>
+                      <span>ERC-{collection.code}</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="nft_coll_pp">
-                  <Link to="/author">
-                    <img className="lazy pp-coll" src={collection.authorImage} alt="" />
-                  </Link>
-                  <i className="fa fa-check"></i>
-                </div>
-                <div className="nft_coll_info">
-                  <Link to="/explore">
-                    <h4>{collection.title}</h4>
-                  </Link>
-                  <span>ERC-{collection.code}</span>
-                </div>
-              </div>
-          
-              </div>
-            
-          ))}
+              ))}
+            </div>
           </div>
-
-        {/* Right Arrow */}
-        <button 
-        onClick={() => instanceRef.current?.next()}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white shadow-lg p-3 rounded-full z-20"
-  >
-          ▶
-        </button>
-          </div>
-          
-          
         </div>
       </div>
+      {/* Right Arrow */}
+      <button
+        onClick={() => instanceRef.current?.next()}
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white shadow-lg p-3 rounded-full z-20"
+      >
+        ▶
+      </button>
     </section>
   );
 };
