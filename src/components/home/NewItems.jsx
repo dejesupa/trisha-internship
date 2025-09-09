@@ -88,7 +88,12 @@ const NewItems = () => {
             {/* )} */}
 
             <div ref={sliderRef} className="keen-slider">
-              {items.map((item) => (
+            {isLoading
+                ? Array.from({ length: skeletonCount }).map((_, i) => (
+                    <SkeletonCard key={i} />
+                  ))
+              :
+              items.map((item) => (
                 <div key={item.id} className="keen-slider__slide">
 
                 <div className="nft__item">
@@ -148,7 +153,6 @@ const NewItems = () => {
             ))}
             </div>
 
-            {/* {!isLoading && items.length > perView && ( */}
             <button
               onClick={() => instanceRef.current?.next()}
               className="arrow-button right-arrow"
@@ -156,7 +160,7 @@ const NewItems = () => {
             >
               ▶
             </button>
-            {/* )} */}
+           
           </div>
         </div>
       </div>
