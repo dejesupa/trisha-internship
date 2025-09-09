@@ -6,7 +6,6 @@ import axios from "axios";
 import { use } from "react";
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css";
-import "../css/HotCollections.css"; 
 
 const HotCollections = () => {
   const [collections, setCollections] = useState([]);
@@ -24,7 +23,7 @@ async function getCollections() {
   const { data } = await axios.get(
     `https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections`);
 
-      setCollections(data.slice(0, 6));
+      setCollections(data);
   }
 
   useEffect(() => {
@@ -42,12 +41,20 @@ async function getCollections() {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          <div className="relative w-full flex items-center">
+          <div className="relative">
+               {/* Left Arrow */}
+          <button 
+      
+          onClick={() => instanceRef.current?.prev()}
+         className="absolute left-4 top-1/2 -translate-y-1/2 bg-white shadow-lg p-3 rounded-full z-20">
+          ◀
+        </button>
+
             {/* Carousel */}
             <div ref={sliderRef} className="keen-slider">
             {collections.map((collection) => (
               <div key={collection.id} className="keen-slider__slide">
-                <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" >
+                
               <div className="nft_coll">
                 <div className="nft_wrap">
                   <Link to="/item-details">
@@ -67,24 +74,17 @@ async function getCollections() {
                   <span>ERC-{collection.code}</span>
                 </div>
               </div>
-            </div>
+          
               </div>
             
           ))}
           </div>
 
-          {/* Left Arrow */}
-          <button 
-      
-          onClick={() => instanceRef.current?.prev()}
-          className="absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-lg p-3 rounded-full z-20 disabled:opacity-50">
-          ◀
-        </button>
-
         {/* Right Arrow */}
         <button 
         onClick={() => instanceRef.current?.next()}
-        className="absolute right-0 top-1/2 -translate-y-1/2 bg-white shadow-lg p-3 rounded-full z-20 disabled:opacity-50">
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white shadow-lg p-3 rounded-full z-20"
+  >
           ▶
         </button>
           </div>
