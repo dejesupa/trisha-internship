@@ -35,7 +35,7 @@ const HotCollections = () => {
       {/* Left Arrow */}
       <button
         onClick={() => instanceRef.current?.prev()}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white shadow-lg p-3 rounded-full z-20"
+       className="arrow-button left-arrow"
       >
         ◀
       </button>
@@ -86,10 +86,11 @@ const HotCollections = () => {
           </div>
         </div>
       </div>
+      
       {/* Right Arrow */}
       <button
         onClick={() => instanceRef.current?.next()}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white shadow-lg p-3 rounded-full z-20"
+        className="arrow-button right-arrow"
       >
         ▶
       </button>
