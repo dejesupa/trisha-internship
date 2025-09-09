@@ -85,7 +85,6 @@ const HotCollections = () => {
           <div className="carousel-wrapper">
             
         {/* Left Arrow */}
-          {!isLoading && collections.length > perView && (
             <button
               onClick={() => instanceRef.current?.prev()}
               className="arrow-button left-arrow"
@@ -93,7 +92,6 @@ const HotCollections = () => {
             >
               ◀
             </button>
-             )}
 
             {/* Slider */}
             <div ref={sliderRef} className="keen-slider">
@@ -137,7 +135,6 @@ const HotCollections = () => {
                 </div>
               ))}
               {/* Right Arrow */}
-              {!isLoading && collections.length > perView && (
               <button
                 onClick={() => instanceRef.current?.next()}
                 className="arrow-button right-arrow"
@@ -145,7 +142,6 @@ const HotCollections = () => {
               >
                 ▶
               </button>
-               )}
             </div>
           </div>
         </div>
