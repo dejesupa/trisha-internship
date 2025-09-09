@@ -43,7 +43,7 @@ const HotCollections = () => {
   }
 
   const skeletonCount = Math.min(perView, 4);
-  
+
   function SkeletonCard() {
   return (
     <div className="keen-slider__slide">
