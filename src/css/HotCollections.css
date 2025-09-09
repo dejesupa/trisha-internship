@@ -1,0 +1,16 @@
+/* Keen slider container must hide overflow */
+.keen-slider {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+/* Each slide should take up space */
+.keen-slider__slide {
+  min-width: 0;
+  flex: 1 0 auto;   /* makes them line up horizontally */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;    /* optional spacing */
+}
