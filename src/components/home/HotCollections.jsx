@@ -8,7 +8,6 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 
 const HotCollections = () => {
-
   const [collections, setCollections] = useState([]);
 
   const [perView, setPerView] = useState(1);
@@ -19,10 +18,10 @@ const HotCollections = () => {
     loop: true,
     slides: { perView: 1, spacing: 12 }, //mobile default
     breakpoints: {
-    "(min-width: 480px)": { slides: { perView: 2, spacing: 14 } },
-    "(min-width: 640px)": { slides: { perView: 3, spacing: 16 } },
-    "(min-width: 900px)": { slides: { perView: 4, spacing: 18 } }, // MAX
-    "(min-width: 1280px)": { slides: { perView: 4, spacing: 20 } },
+      "(min-width: 480px)": { slides: { perView: 2, spacing: 14 } },
+      "(min-width: 640px)": { slides: { perView: 3, spacing: 16 } },
+      "(min-width: 900px)": { slides: { perView: 4, spacing: 18 } }, // MAX
+      "(min-width: 1280px)": { slides: { perView: 4, spacing: 20 } },
     },
     created(slider) {
       updatePerView(slider);
@@ -31,7 +30,6 @@ const HotCollections = () => {
       updatePerView(slider);
     },
   });
-
 
   function updatePerView(slider) {
     let currentPerView = 1;
@@ -43,21 +41,21 @@ const HotCollections = () => {
   }
 
   const skeletonCount = Math.min(perView, 4);
-  
+
   function SkeletonCard() {
-  return (
-    <div className="keen-slider__slide">
-      <div className="nft_coll skeleton-card">
-        <div className="nft_wrap skeleton-img" />
-        <div className="nft_coll_pp skeleton-avatar" />
-        <div className="nft_coll_info">
-          <div className="skeleton-text title"></div>
-          <div className="skeleton-text subtitle"></div>
+    return (
+      <div className="keen-slider__slide">
+        <div className="nft_coll skeleton-card">
+          <div className="nft_wrap skeleton-img" />
+          <div className="nft_coll_pp skeleton-avatar" />
+          <div className="nft_coll_info">
+            <div className="skeleton-text title"></div>
+            <div className="skeleton-text subtitle"></div>
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
   async function getCollections() {
     const { data } = await axios.get(
@@ -83,69 +81,64 @@ const HotCollections = () => {
             </div>
           </div>
           <div className="carousel-wrapper">
-            
-        {/* Left Arrow */}
-          {!isLoading && collections.length > perView && (
-            <button
-              onClick={() => instanceRef.current?.prev()}
-              className="arrow-button left-arrow"
-              aria-label="Previous"
-            >
-              ◀
-            </button>
-             )}
+            {/* Left Arrow */}
+           
+              <button
+                onClick={() => instanceRef.current?.prev()}
+                className="arrow-button left-arrow"
+                aria-label="Previous"
+              >
+                ◀
+              </button>
+          
 
             {/* Slider */}
             <div ref={sliderRef} className="keen-slider">
-
               {isLoading
                 ? Array.from({ length: skeletonCount }).map((_, i) => (
                     <SkeletonCard key={i} />
                   ))
-                :
-              
-              
-              collections.map((collection) => (
-                <div key={collection.id} className="keen-slider__slide">
-                  <div className="nft_coll">
-                    <div className="nft_wrap">
-                      <Link to="/item-details">
-                        <img
-                          src={collection.nftImage}
-                          className="lazy img-fluid"
-                          alt=""
-                        />
-                      </Link>
+                : collections.map((collection) => (
+                    <div key={collection.id} className="keen-slider__slide">
+                      <div className="nft_coll">
+                        <div className="nft_wrap">
+                          <Link to="/item-details">
+                            <img
+                              src={collection.nftImage}
+                              className="lazy img-fluid"
+                              alt=""
+                            />
+                          </Link>
+                        </div>
+                        <div className="nft_coll_pp">
+                          <Link to="/author">
+                            <img
+                              className="lazy pp-coll"
+                              src={collection.authorImage}
+                              alt=""
+                            />
+                          </Link>
+                          <i className="fa fa-check"></i>
+                        </div>
+                        <div className="nft_coll_info">
+                          <Link to="/explore">
+                            <h4>{collection.title}</h4>
+                          </Link>
+                          <span>ERC-{collection.code}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="nft_coll_pp">
-                      <Link to="/author">
-                        <img
-                          className="lazy pp-coll"
-                          src={collection.authorImage}
-                          alt=""
-                        />
-                      </Link>
-                      <i className="fa fa-check"></i>
-                    </div>
-                    <div className="nft_coll_info">
-                      <Link to="/explore">
-                        <h4>{collection.title}</h4>
-                      </Link>
-                      <span>ERC-{collection.code}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                  ))}
               {/* Right Arrow */}
-              {!isLoading && collections.length > perView && (
-              <button
-                onClick={() => instanceRef.current?.next()}
-                className="arrow-button right-arrow"
-                aria-label="Next"
-              >
-                ▶
-              </button>
-               )}
+            
+                <button
+                  onClick={() => instanceRef.current?.next()}
+                  className="arrow-button right-arrow"
+                  aria-label="Next"
+                >
+                  ▶
+                </button>
+        
             </div>
           </div>
         </div>
