@@ -4,64 +4,19 @@ import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
 import { use } from "react";
-import { useKeenSlider } from "keen-slider/react";
-import "keen-slider/keen-slider.min.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const HotCollections = () => {
   const [collections, setCollections] = useState([]);
-
-  const [perView, setPerView] = useState(1);
-
   const [isLoading, setIsLoading] = useState(true);
 
-  const [sliderRef, instanceRef] = useKeenSlider({
-    loop: true,
-    slides: { perView: 1, spacing: 12 }, //mobile default
-    breakpoints: {
-      "(min-width: 480px)": { slides: { perView: 2, spacing: 14 } },
-      "(min-width: 640px)": { slides: { perView: 3, spacing: 16 } },
-      "(min-width: 900px)": { slides: { perView: 4, spacing: 18 } }, // MAX
-      "(min-width: 1280px)": { slides: { perView: 4, spacing: 20 } },
-    },
-    created(slider) {
-      updatePerView(slider);
-    },
-    updated(slider) {
-      updatePerView(slider);
-    },
-  });
-
-  function updatePerView(slider) {
-    let currentPerView = 1;
-    if (typeof slider.options.slides.perView === "number") {
-      currentPerView = slider.options.slides.perView;
-    }
-    // Clamp to max 4
-    setPerView(Math.min(currentPerView, 4));
-  }
-
-  const skeletonCount = Math.min(perView, 4);
-
-  function SkeletonCard() {
-    return (
-      <div className="keen-slider__slide">
-        <div className="nft_coll skeleton-card">
-          <div className="nft_wrap skeleton-img" />
-          <div className="nft_coll_pp skeleton-avatar" />
-          <div className="nft_coll_info">
-            <div className="skeleton-text title"></div>
-            <div className="skeleton-text subtitle"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   async function getCollections() {
     const { data } = await axios.get(
       `https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections`
     );
-
     setCollections(data);
     setIsLoading(false);
   }
@@ -69,6 +24,75 @@ const HotCollections = () => {
   useEffect(() => {
     getCollections();
   }, []);
+
+  function NextArrow({ onClick }) {
+    return (
+      <div
+        onClick={onClick}
+        className="custom-arrow--next"
+        style={{
+          position: "absolute",
+          top: "50%",
+          right: "-25px",
+          transform: "translateY(-50%)",
+          zIndex: 2,
+          width: 40,
+          height: 40,
+          background: "#fff",
+          borderRadius: "50%",
+          boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+        }}
+      >
+        <i className="fa fa-chevron-right" style={{ fontSize: 16 }} />
+      </div>
+    );
+  }
+
+  function PrevArrow({ onClick }) {
+    return (
+      <div
+        onClick={onClick}
+        className="custom-arrow--prev"
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "-25px",
+          transform: "translateY(-50%)",
+          zIndex: 2,
+          width: 40,
+          height: 40,
+          background: "#fff",
+          borderRadius: "50%",
+          boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+        }}
+      >
+        <i className="fa fa-chevron-left" style={{ fontSize: 16 }} />
+      </div>
+    );
+  }
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 600,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    responsive: [
+      { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 1 } },
+      { breakpoint: 768, settings: { slidesToShow: 2, slidesToScroll: 1 } },
+      { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } },
+    ],
+  };
 
   return (
     <section id="section-collections" className="no-bottom">
@@ -81,22 +105,39 @@ const HotCollections = () => {
             </div>
           </div>
           <div className="carousel-wrapper">
-            {/* Left Arrow */}
-           
-              <button
-                onClick={() => instanceRef.current?.prev()}
-                className="arrow-button left-arrow"
-                aria-label="Previous"
-              >
-                ◀
-              </button>
+    
           
 
             {/* Slider */}
-            <div ref={sliderRef} className="keen-slider">
+            <Slider {...settings}>
               {isLoading
-                ? Array.from({ length: skeletonCount }).map((_, i) => (
-                    <SkeletonCard key={i} />
+                ? new Array(4).fill(0).map((_, index) => (
+                    <div className="px-1" key={index}>
+                      <div className="nft_wrap">
+                        <div
+                          className="skeleton-box"
+                          style={{ width: "100%", height: "200px" }}
+                        ></div>
+                      </div>
+                      <div className="nft_coll_pp">
+                        <div
+                          className="skeleton-box"
+                          style={{ width: "50px", height: "50px" }}
+                        ></div>
+                        <i className="fa fa-check"></i>
+                      </div>
+                      <div className="nft_coll_info">
+                        <div
+                          className="skeleton-box"
+                          style={{ width: "100px", height: "20px" }}
+                        ></div>
+                        <br />
+                        <div
+                          className="skeleton-box"
+                          style={{ width: "60px", height: "20px" }}
+                        ></div>
+                      </div>
+                    </div>
                   ))
                 : collections.map((collection) => (
                     <div key={collection.id} className="keen-slider__slide">
@@ -129,17 +170,10 @@ const HotCollections = () => {
                       </div>
                     </div>
                   ))}
-              {/* Right Arrow */}
+               
             
-                <button
-                  onClick={() => instanceRef.current?.next()}
-                  className="arrow-button right-arrow"
-                  aria-label="Next"
-                >
-                  ▶
-                </button>
+          </Slider>
         
-            </div>
           </div>
         </div>
       </div>
