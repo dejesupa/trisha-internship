@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
 import { Link } from "react-router-dom";
 import AuthorImage from "../images/author_thumbnail.jpg";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const Author = () => {
+  const { authorId } = useParams();
+  const [author, setAuthor] = useState(null);
+
+   
+useEffect(() => {
+    async function fetchAuthor() {
+      try {
+        const { data } = await axios.get(`/api/author/${authorId}`);
+        setAuthor(data);
+      } catch (err) {
+        console.error("Error fetching author:", err);
+      }
+    }
+    fetchAuthor();
+  }, [authorId]);
+
+   if (!author) return <p>Loading author details...</p>;
+
   return (
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
