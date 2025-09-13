@@ -14,13 +14,17 @@ const Author = () => {
 useEffect(() => {
     async function fetchAuthor() {
       try {
-        const { data } = await axios.get(`/api/author/${authorId}`);
+        const { data } = await axios.get(`/authors?author=${authorId}`);
+           console.log("Fetched author data:", data);
         setAuthor(data);
+        
+      
       } catch (err) {
         console.error("Error fetching author:", err);
       }
+  
     }
-    fetchAuthor(authorId);
+    fetchAuthor();
   }, [authorId]);
 
    if (!author) return <p>Loading author details...</p>;
@@ -45,13 +49,13 @@ useEffect(() => {
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img src={author?.authorImage} alt="" />
+                      <img src={AuthorImage} alt="" />
 
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
                         <h4>
-                          Monica Lucas
-                          <span className="profile_username">@monicaaaa</span>
+                         {author.authorName}
+                          <span className="profile_username">{author.tag}</span>
                           <span id="wallet" className="profile_wallet">
                             UDHUHWudhwd78wdt7edb32uidbwyuidhg7wUHIFUHWewiqdj87dy7
                           </span>
