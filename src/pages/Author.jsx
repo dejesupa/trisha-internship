@@ -20,7 +20,7 @@ useEffect(() => {
         console.error("Error fetching author:", err);
       }
     }
-    fetchAuthor();
+    fetchAuthor(authorId);
   }, [authorId]);
 
    if (!author) return <p>Loading author details...</p>;
@@ -45,7 +45,7 @@ useEffect(() => {
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img src={AuthorImage} alt="" />
+                      <img src={author?.authorImage} alt="" />
 
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
