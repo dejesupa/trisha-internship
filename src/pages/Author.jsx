@@ -1,10 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
 import { Link } from "react-router-dom";
 import AuthorImage from "../images/author_thumbnail.jpg";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const Author = () => {
+  const { authorId } = useParams();
+  const [author, setAuthor] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+   
+useEffect(() => {
+    async function fetchAuthor() {
+      try {
+        const { data } = await axios.get(`/authors?author=${authorId}`);
+           console.log("Fetched author data:", data);
+        setAuthor(data);
+        
+      
+      } catch (err) {
+        console.error("Error fetching author:", err);
+      } finally {
+        setIsLoading(false);
+      }
+
+  
+    }
+    fetchAuthor();
+  }, [authorId]);
+
+    if (isLoading) return <p>Loading author details...</p>;
+   if (!author) return <p>Loading author details...</p>;
+
   return (
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
@@ -25,17 +54,18 @@ const Author = () => {
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img src={AuthorImage} alt="" />
+                      <img src={author.authorImage} alt="" />
 
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
                         <h4>
-                          Monica Lucas
-                          <span className="profile_username">@monicaaaa</span>
+                         {author.authorName}
+                          <span className="profile_username">@{author.tag}</span>
                           <span id="wallet" className="profile_wallet">
-                            UDHUHWudhwd78wdt7edb32uidbwyuidhg7wUHIFUHWewiqdj87dy7
+                            {author.address}
                           </span>
-                          <button id="btn_copy" title="Copy Text">
+                          <button id="btn_copy" title="Copy Text"
+                          onClick={() => navigator.clipboard.writeText(author.address)}>
                             Copy
                           </button>
                         </h4>
@@ -44,7 +74,7 @@ const Author = () => {
                   </div>
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower">573 followers</div>
+                      <div className="profile_follower">{author.followers} followers</div>
                       <Link to="#" className="btn-main">
                         Follow
                       </Link>
@@ -55,7 +85,7 @@ const Author = () => {
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems />
+                  <AuthorItems nftCollection={author.nftCollection} isLoading={!author} />
                 </div>
               </div>
             </div>
