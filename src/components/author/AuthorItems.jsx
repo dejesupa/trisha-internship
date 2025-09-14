@@ -4,7 +4,7 @@ import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 
 const AuthorItems = ({ nftCollection = [], isLoading }) => {
-   console.log("Rendering AuthorItems. Full collection:", nftCollection);
+  console.log("Rendering AuthorItems. Full collection:", nftCollection); 
 
   const skeletonCount = 8;
 
@@ -35,7 +35,7 @@ const AuthorItems = ({ nftCollection = [], isLoading }) => {
               <div className="nft__item">
                 <div className="author_list_pp">
                   <Link to={`/author/${item.authorId}`}>
-                    <img className="lazy" src={item.authorImage} alt="" />
+                    <img className="lazy" src={item.nftImage} alt="" />
                     <i className="fa fa-check"></i>
                   </Link>
                 </div>
@@ -57,7 +57,10 @@ const AuthorItems = ({ nftCollection = [], isLoading }) => {
                       </div>
                     </div>
                   </div>
-                  <Link to={`/item-details/${item.nftId}`}>
+                  <Link to={`/item-details/${item.nftId}`}
+                  onClick={() =>
+                          console.log(`Navigating to item-details/${item.nftId}`)
+                        }>
                     <img
                       src={item.nftImage}
                       className="lazy nft__item_preview"

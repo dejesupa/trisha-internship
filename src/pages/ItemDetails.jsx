@@ -7,27 +7,36 @@ import axios from "axios";
 
 const ItemDetails = () => {
   const { id } = useParams();
-  const [item, setItem] = useState(null);
+  const [item, setItem] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-
-  useEffect(() => {
-    async function fetchItem() {
+  async function fetchItem() {
       try {
         setIsLoading(true);
-        const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/item?id=${id}`);
+        const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?id=${id}`);
         console.log("useParams id:", id);
-        console.log("Fetched NFT details:", data);
+        console.log("Fetched NFT details (raw API response):", data);
+
+        if (!data) {
+        console.warn("⚠️ API returned null for this ID. No item found.");
+      }
         setItem(data);
+      
       } catch (err) {
         console.error("Error fetching NFT item:", err);
       } finally {
         setIsLoading(false);
       }
     }
-    window.scrollTo(0, 0);
+
+  useEffect(() => {
+    if (id) {
+  window.scrollTo(0, 0);
     fetchItem();
+    }
   }, [id]);
+  
+   
 
   if (isLoading) {
     return (
@@ -175,14 +184,14 @@ const ItemDetails = () => {
                       <h6>Creator</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to={`/author/${item.creatorId || item.authorId}`}>
-                            <img className="lazy" src={item.creatorImage || item.authorImage} alt="" />
+                          <Link to={`/author/${item.authorId}`}>
+                            <img className="lazy" src={item.authorImage} alt="" />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to={`/author/${item.creatorId || item.authorId}`}> 
-                          {item.creatorName || item.authorName}</Link>
+                          <Link to={`/author/${item.authorId}`}> 
+                          {item.authorName}</Link>
                         </div>
                       </div>
                     </div>
