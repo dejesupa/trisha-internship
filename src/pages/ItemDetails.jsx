@@ -13,7 +13,7 @@ const ItemDetails = () => {
   async function fetchItem() {
       try {
         setIsLoading(true);
-        const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/?nftId=${id}`);
+        const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${id}`);
         console.log("useParams id:", id);
         console.log("Fetched NFT details (raw API response):", data);
 
@@ -167,13 +167,13 @@ const ItemDetails = () => {
                       <div className="item_author">
                         <div className="author_list_pp">
                           <Link to={`/author/${item.authorId}`}>
-                            <img className="lazy" src={item.authorImage} alt="" />
+                            <img className="lazy" src={item.ownerImage} alt="" />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
                           <Link to={`/author/${item.authorId}`}>
-                          {item.authorName}</Link>
+                          {item.ownerName}</Link>
                         </div>
                       </div>
                     </div>
@@ -185,13 +185,13 @@ const ItemDetails = () => {
                       <div className="item_author">
                         <div className="author_list_pp">
                           <Link to={`/author/${item.authorId}`}>
-                            <img className="lazy" src={item.authorImage} alt="" />
+                            <img className="lazy" src={item.creatorImage} alt="" />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
                           <Link to={`/author/${item.authorId}`}> 
-                          {item.authorName}</Link>
+                          {item.creatorName}</Link>
                         </div>
                       </div>
                     </div>
