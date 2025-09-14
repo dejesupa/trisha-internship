@@ -9,6 +9,7 @@ import axios from "axios";
 const Author = () => {
   const { authorId } = useParams();
   const [author, setAuthor] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
    
 useEffect(() => {
@@ -21,12 +22,16 @@ useEffect(() => {
       
       } catch (err) {
         console.error("Error fetching author:", err);
+      } finally {
+        setIsLoading(false);
       }
+
   
     }
     fetchAuthor();
   }, [authorId]);
 
+    if (isLoading) return <p>Loading author details...</p>;
    if (!author) return <p>Loading author details...</p>;
 
   return (
@@ -49,17 +54,18 @@ useEffect(() => {
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img src={AuthorImage} alt="" />
+                      <img src={author.authorImage} alt="" />
 
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
                         <h4>
                          {author.authorName}
-                          <span className="profile_username">{author.tag}</span>
+                          <span className="profile_username">@{author.tag}</span>
                           <span id="wallet" className="profile_wallet">
-                            UDHUHWudhwd78wdt7edb32uidbwyuidhg7wUHIFUHWewiqdj87dy7
+                            {author.address}
                           </span>
-                          <button id="btn_copy" title="Copy Text">
+                          <button id="btn_copy" title="Copy Text"
+                          onClick={() => navigator.clipboard.writeText(author.address)}>
                             Copy
                           </button>
                         </h4>
@@ -68,7 +74,7 @@ useEffect(() => {
                   </div>
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower">573 followers</div>
+                      <div className="profile_follower">{author.followers} followers</div>
                       <Link to="#" className="btn-main">
                         Follow
                       </Link>
@@ -79,7 +85,7 @@ useEffect(() => {
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems />
+                  <AuthorItems nftCollection={author.nftCollection} isLoading={!author} />
                 </div>
               </div>
             </div>
