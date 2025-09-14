@@ -4,7 +4,7 @@ import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 
 const AuthorItems = ({ nftCollection = [], isLoading }) => {
-   console.log("NFT Collection:", nftCollection);
+   console.log("Rendering AuthorItems. Full collection:", nftCollection);
 
   const skeletonCount = 8;
 
@@ -31,7 +31,7 @@ const AuthorItems = ({ nftCollection = [], isLoading }) => {
             nftCollection  &&
             nftCollection.length > 0 &&
            nftCollection.map((item) => (
-            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={item.id}>
+            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={item.nftId}>
               <div className="nft__item">
                 <div className="author_list_pp">
                   <Link to={`/author/${item.authorId}`}>
@@ -57,17 +57,17 @@ const AuthorItems = ({ nftCollection = [], isLoading }) => {
                       </div>
                     </div>
                   </div>
-                  <Link to={`/item-details/${item.id}`}>
+                  <Link to={`/item-details/${item.nftId}`}>
                     <img
-                      src={item.nftImage || item.image}
+                      src={item.nftImage}
                       className="lazy nft__item_preview"
                       alt=""
                     />
                   </Link>
                 </div>
                 <div className="nft__item_info">
-                  <Link to={`/item-details/${item.id}`}>
-                    <h4>{item.title || item.name}</h4>
+                  <Link to={`/item-details/${item.nftId}`}>
+                    <h4>{item.title}</h4>
                   </Link>
                   <div className="nft__item_price">{item.price} ETH</div>
                   <div className="nft__item_like">

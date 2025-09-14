@@ -10,11 +10,13 @@ const ItemDetails = () => {
   const [item, setItem] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+
   useEffect(() => {
     async function fetchItem() {
       try {
         setIsLoading(true);
-        const { data } = await axios.get(`nftItem?id=${id}`);
+        const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/item?id=${id}`);
+        console.log("useParams id:", id);
         console.log("Fetched NFT details:", data);
         setItem(data);
       } catch (err) {
@@ -128,7 +130,7 @@ const ItemDetails = () => {
             <div className="row">
               <div className="col-md-6 text-center">
                 <img
-                  src={item.nftImage || item.image}
+                  src={item.nftImage}
                   className="img-fluid img-rounded mb-sm-30 nft-image"
                   alt={item.title}
                 />
@@ -137,32 +139,32 @@ const ItemDetails = () => {
                 <div className="item_info">
                   <h2>{item.title}</h2>
 
-                  <div className="item_info_counts">
+                  <div className="item_info_counts d-flex gap-4 mb-3">
                     <div className="item_info_views">
                       <i className="fa fa-eye"></i>
-                       {item.views || 0}
+                       {item.views}
                     </div>
                     <div className="item_info_like">
                       <i className="fa fa-heart"></i>
-                      {item.likes || 0}
+                      {item.likes}
                     </div>
                   </div>
                   <p>
-                    {item.description || "No description available."}
+                    {item.description}
                   </p>
                   <div className="d-flex flex-row">
                     <div className="mr40">
                       <h6>Owner</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to={`/author/${item.ownerId || item.authorId}`}>
-                            <img className="lazy" src={item.ownerImage || item.authorImage} alt="" />
+                          <Link to={`/author/${item.authorId}`}>
+                            <img className="lazy" src={item.authorImage} alt="" />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to={`/author/${item.ownerId || item.authorId}`}>
-                          {item.ownerName || item.authorName}</Link>
+                          <Link to={`/author/${item.authorId}`}>
+                          {item.authorName}</Link>
                         </div>
                       </div>
                     </div>
