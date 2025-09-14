@@ -13,7 +13,7 @@ const ItemDetails = () => {
   async function fetchItem() {
       try {
         setIsLoading(true);
-        const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?id=${id}`);
+        const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/?nftId=${id}`);
         console.log("useParams id:", id);
         console.log("Fetched NFT details (raw API response):", data);
 
