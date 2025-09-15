@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
+import Countdown from "../Countdown";
 
 const ExploreItems = () => {
 
@@ -45,7 +46,7 @@ const ExploreItems = () => {
           <div className="nft__item">
             <div className="author_list_pp">
               <Link
-                to={`/author/$exploreItem.authorId`}
+                to={`/author/${exploreItem.authorId}`}
                 data-bs-toggle="tooltip"
                 data-bs-placement="top"
               >
@@ -53,7 +54,12 @@ const ExploreItems = () => {
                 <i className="fa fa-check"></i>
               </Link>
             </div>
-            <div className="de_countdown">{exploreItem.expiryDate}</div>
+            
+            {exploreItem.expiryDate && (
+            <div className="de_countdown">
+              <Countdown expiryDate={exploreItem.expiryDate}  />
+              </div>
+               )}
 
             <div className="nft__item_wrap">
               <div className="nft__item_extra">
@@ -73,12 +79,12 @@ const ExploreItems = () => {
                   </div>
                 </div>
               </div>
-              <Link to="/item-details">
+              <Link to={`/item-details/${exploreItem.nftId}`}>
                 <img src={exploreItem.nftImage} className="lazy nft__item_preview" alt="" />
               </Link>
             </div>
             <div className="nft__item_info">
-              <Link to="/item-details">
+              <Link to={`/item-details/${exploreItem.nftId}`}>
                 <h4>{exploreItem.title}</h4>
               </Link>
               <div className="nft__item_price">{exploreItem.price}</div>
