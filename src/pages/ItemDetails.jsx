@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import AuthorImage from "../images/author_thumbnail.jpg";
 import nftImage from "../images/nftImage.jpg";
 import axios from "axios";
+import SkeletonDetails from "../components/SkeletonDetails";
 
 const ItemDetails = () => {
   const { id } = useParams();
@@ -40,89 +41,7 @@ const ItemDetails = () => {
 
   if (isLoading) {
     return (
-      <div className="container" style={{ marginTop: "3rem" }}>
-        <div className="row">
-          {/* Image Skeleton */}
-          <div className="col-md-6 text-center">
-            <div className="skeleton skeleton-image" />
-          </div>
-
-          {/* Info Skeleton */}
-          <div className="col-md-6">
-            <div className="skeleton skeleton-title" />
-            <div className="skeleton skeleton-line" />
-            <div className="skeleton skeleton-line short" />
-            <div className="skeleton skeleton-line" />
-            <div className="skeleton skeleton-avatar" />
-            <div className="skeleton skeleton-price" />
-            <div className="skeleton skeleton-button" />
-          </div>
-        </div>
-
-        {/* Skeleton Styles */}
-        <style>{`
-          .skeleton {
-            background: #e0e0e0;
-            border-radius: 6px;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 12px;
-          }
-          .skeleton::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -150%;
-            height: 100%;
-            width: 150%;
-            background: linear-gradient(
-              90deg,
-              rgba(224, 224, 224, 0) 0%,
-              rgba(255, 255, 255, 0.6) 50%,
-              rgba(224, 224, 224, 0) 100%
-            );
-            animation: shimmer 1.5s infinite;
-          }
-          .skeleton-image {
-            width: 100%;
-            height: 350px;
-            border-radius: 10px;
-          }
-          .skeleton-title {
-            width: 70%;
-            height: 28px;
-            margin-bottom: 16px;
-          }
-          .skeleton-line {
-            width: 100%;
-            height: 14px;
-          }
-          .skeleton-line.short {
-            width: 60%;
-          }
-          .skeleton-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-top: 20px;
-          }
-          .skeleton-price {
-            width: 120px;
-            height: 20px;
-            margin-top: 20px;
-          }
-          .skeleton-button {
-            width: 150px;
-            height: 40px;
-            border-radius: 20px;
-            margin-top: 20px;
-          }
-          @keyframes shimmer {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(100%); }
-          }
-        `}</style>
-      </div>
+      <SkeletonDetails />
     );
   }
 
