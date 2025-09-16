@@ -7,6 +7,7 @@ import { use } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import SkeletonCard from "../UI/SkeletonCard";
 
 const HotCollections = () => {
   const [collections, setCollections] = useState([]);
@@ -112,32 +113,8 @@ const HotCollections = () => {
             <Slider {...settings}>
               {isLoading
                 ? new Array(4).fill(0).map((_, index) => (
-                    <div className="px-1" key={index}>
-                      <div className="nft_wrap">
-                        <div
-                          className="skeleton-box"
-                          style={{ width: "100%", height: "200px" }}
-                        ></div>
-                      </div>
-                      <div className="nft_coll_pp">
-                        <div
-                          className="skeleton-box"
-                          style={{ width: "50px", height: "50px" }}
-                        ></div>
-                        <i className="fa fa-check"></i>
-                      </div>
-                      <div className="nft_coll_info">
-                        <div
-                          className="skeleton-box"
-                          style={{ width: "100px", height: "20px" }}
-                        ></div>
-                        <br />
-                        <div
-                          className="skeleton-box"
-                          style={{ width: "60px", height: "20px" }}
-                        ></div>
-                      </div>
-                    </div>
+                    <SkeletonCard key={index} />
+                     
                   ))
                 : collections.map((collection) => (
                     <div key={collection.id} className="keen-slider__slide">

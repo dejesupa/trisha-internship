@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import axios from "axios";
+import SkeletonSeller from "../SkeletonSeller";
 
 const TopSellers = () => {
   const [sellers, setSellers] = useState([]);
@@ -88,9 +89,7 @@ const TopSellers = () => {
                       .fill(0)
                       .map((_, index) => (
                         <li key={index} className="skeleton-seller">
-                          <div className="skeleton-avatar" />
-                          <div className="skeleton-text name" />
-                          <div className="skeleton-text price" />
+                        <SkeletonSeller />
                         </li>
                       ))
                   : sellers.map((seller) => (

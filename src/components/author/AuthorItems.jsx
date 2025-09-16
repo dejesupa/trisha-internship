@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
+import SkeletonCard from "../UI/SkeletonCard";
 
 const AuthorItems = ({ nftCollection = [], isLoading }) => {
   console.log("Rendering AuthorItems. Full collection:", nftCollection); 
@@ -17,14 +18,12 @@ const AuthorItems = ({ nftCollection = [], isLoading }) => {
             Array(skeletonCount)
               .fill(0)
               .map((_, index) => (
-                <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={`skeleton-${index}`}>
-                  <div className="nft__item skeleton-card">
-                    <div className="skeleton skeleton-avatar" />
-                    <div className="skeleton skeleton-image" />
-                    <div className="skeleton skeleton-text" />
-                    <div className="skeleton skeleton-text short" />
-                  </div>
-                </div>
+                <div
+                className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
+                key={`skeleton-${index}`}
+              >
+                <SkeletonCard />
+              </div>
               ))}
 
           {!isLoading &&
