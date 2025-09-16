@@ -10,7 +10,17 @@ const Author = () => {
   const { authorId } = useParams();
   const [author, setAuthor] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [followers, setFollowers] = useState(0);
 
+  const handleFollowToggle = () => {
+    if (isFollowing) {
+      setFollowers((prev) => prev - 1);
+    } else {
+      setFollowers((prev) => prev + 1);
+    }
+    setIsFollowing((prev) => !prev)
+  };
    
 useEffect(() => {
     async function fetchAuthor() {
@@ -18,6 +28,7 @@ useEffect(() => {
         const { data } = await axios.get(`/authors?author=${authorId}`);
            console.log("Fetched author data:", data);
         setAuthor(data);
+        setFollowers(data.followers);
         
       
       } catch (err) {
@@ -74,9 +85,14 @@ useEffect(() => {
                   </div>
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower">{author.followers} followers</div>
-                      <Link to="#" className="btn-main">
-                        Follow
+                      <div className="profile_follower">{followers} followers</div>
+                      <Link to="#" className="btn-main" 
+                      onClick={(event) => {
+                        event.preventDefault();
+                        handleFollowToggle();
+                      }}
+                    >
+                        {isFollowing ? "Unfollow" : "Follow"}  
                       </Link>
                     </div>
                   </div>
@@ -85,7 +101,7 @@ useEffect(() => {
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems nftCollection={author.nftCollection} isLoading={!author} />
+                  <AuthorItems nftCollection={author.nftCollection} author={author} isLoading={!author} />
                 </div>
               </div>
             </div>
