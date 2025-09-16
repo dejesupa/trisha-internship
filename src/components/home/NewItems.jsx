@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
@@ -17,6 +17,7 @@ const NewItems = () => {
     const { data } = await axios.get(
       `https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems`
     );
+    console.log("new items:", data)
     setItems(data);
     setIsLoading(false);
   }
@@ -152,7 +153,7 @@ const NewItems = () => {
                             </div>
                           </div>
 
-                          <Link to="/item-details">
+                          <Link to={`/item-details/${item.nftId}`}>
                             <img
                               src={item.nftImage}
                               className="lazy nft__item_preview"
@@ -161,7 +162,7 @@ const NewItems = () => {
                           </Link>
                         </div>
                         <div className="nft__item_info">
-                          <Link to="/item-details">
+                          <Link to={`/item-details/${item.nftId}`}>
                             <h4>{item.title}</h4>
                           </Link>
                           <div className="nft__item_price">

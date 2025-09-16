@@ -18,6 +18,7 @@ const HotCollections = () => {
     const { data } = await axios.get(
       `https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections`
     );
+    console.log("collection data:", data)
     setCollections(data);
     setIsLoading(false);
   }
@@ -120,7 +121,7 @@ const HotCollections = () => {
                     <div key={collection.id} className="keen-slider__slide">
                       <div className="nft_coll">
                         <div className="nft_wrap">
-                          <Link to="/item-details">
+                          <Link to={`/item-details/${collection.nftId}`}>
                             <img
                               src={collection.nftImage}
                               className="lazy img-fluid"
@@ -129,7 +130,7 @@ const HotCollections = () => {
                           </Link>
                         </div>
                         <div className="nft_coll_pp">
-                          <Link to="/author">
+                          <Link to={`/author/${collection.authorId}`}>
                             <img
                               className="lazy pp-coll"
                               src={collection.authorImage}
