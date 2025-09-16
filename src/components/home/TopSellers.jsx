@@ -83,7 +83,8 @@ const TopSellers = () => {
               </div>
             </div>
             <div className="col-md-12">
-              <ol className="author_list">
+              <div data-aos="zoom-in">
+                 <ol className="author_list">
                 {isLoading
                   ? Array(skeletonCount)
                       .fill(0)
@@ -113,6 +114,8 @@ const TopSellers = () => {
                       </li>
                     ))}
               </ol>
+              </div>
+             
             </div>
           </div>
         </div>

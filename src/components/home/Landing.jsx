@@ -17,6 +17,7 @@ const Landing = () => {
           <div className="row align-items-center">
             <div className="col-md-6">
               <div className="spacer-single"></div>
+              <div data-aos="fade-up">
               <h6>
                 <span className="text-uppercase id-color-2">
                   Ultraverse Market
@@ -33,10 +34,14 @@ const Landing = () => {
               <Link className="btn-main lead" to="/explore">
                 Explore
               </Link>
+              </div>
               <div className="mb-sm-30"></div>
             </div>
             <div className="col-md-6 xs-hide">
-              <img src={NFT} className="lazy img-fluid" alt="" />
+              <div data-aos="zoom-in">
+                <img src={NFT} className="lazy img-fluid" alt="" />
+              </div>
+              
             </div>
           </div>
         </div>

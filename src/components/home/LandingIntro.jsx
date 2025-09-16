@@ -10,10 +10,12 @@ const LandingIntro = () => {
               <i className="bg-color-2 i-boxed icon_wallet"></i>
               <div className="text">
                 <h4 className="">Set up your wallet</h4>
-                <p>
+                <div data-aos="fade-up">
+                  <p>
                   Sed ut perspiciatis unde omnis iste natus error sit voluptatem
                   accusantium doloremque laudantium, totam rem.
                 </p>
+                </div>
               </div>
               <i className="wm icon_wallet"></i>
             </div>
@@ -23,10 +25,12 @@ const LandingIntro = () => {
               <i className="bg-color-2 i-boxed icon_cloud-upload_alt"></i>
               <div className="text">
                 <h4 className="">Add your NFT's</h4>
+                <div data-aos="fade-up">
                 <p>
                   Sed ut perspiciatis unde omnis iste natus error sit voluptatem
                   accusantium doloremque laudantium, totam rem.
                 </p>
+                </div>
               </div>
               <i className="wm icon_cloud-upload_alt"></i>
             </div>
@@ -36,10 +40,12 @@ const LandingIntro = () => {
               <i className="bg-color-2 i-boxed icon_tags_alt"></i>
               <div className="text">
                 <h4 className="">Sell your NFT's</h4>
+                <div data-aos="fade-up">
                 <p>
                   Sed ut perspiciatis unde omnis iste natus error sit voluptatem
                   accusantium doloremque laudantium, totam rem.
                 </p>
+                </div>
               </div>
               <i className="wm icon_tags_alt"></i>
             </div>
