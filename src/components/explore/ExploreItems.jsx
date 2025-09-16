@@ -4,7 +4,7 @@ import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
 import Countdown from "../Countdown";
-import SkeletonCard from "../UI/Skeleton";
+import SkeletonCard from "../UI/SkeletonCard";
 
 const ExploreItems = () => {
 
@@ -73,7 +73,7 @@ const ExploreItems = () => {
     .map((_, index) => (
       <div
               key={`skeleton-${index}`}
-              className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
+              className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
             >
               <SkeletonCard />
             </div>

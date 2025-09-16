@@ -7,7 +7,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Countdown from "../Countdown";
-import SkeletonCard from "../UI/Skeleton";
+import SkeletonCard from "../UI/SkeletonCard";
 
 const NewItems = () => {
   const [items, setItems] = useState([]);

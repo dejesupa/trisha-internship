@@ -7,7 +7,7 @@ import { use } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import SkeletonCard from "../UI/Skeleton";
+import SkeletonCard from "../UI/SkeletonCard";
 
 const HotCollections = () => {
   const [collections, setCollections] = useState([]);
