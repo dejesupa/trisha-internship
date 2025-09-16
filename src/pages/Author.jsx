@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import AuthorImage from "../images/author_thumbnail.jpg";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import SkeletonCard from "../components/UI/SkeletonCard";
+import SkeletonAuthor from "../components/SkeletonAuthor";
 
 const Author = () => {
   const { authorId } = useParams();
@@ -24,6 +26,7 @@ const Author = () => {
    
 useEffect(() => {
     async function fetchAuthor() {
+      setIsLoading(true);
       try {
         const { data } = await axios.get(`/authors?author=${authorId}`);
            console.log("Fetched author data:", data);
@@ -42,8 +45,26 @@ useEffect(() => {
     fetchAuthor();
   }, [authorId]);
 
-    if (isLoading) return <p>Loading author details...</p>;
-   if (!author) return <p>Loading author details...</p>;
+
+     if (isLoading) {
+    return (
+      <div id="wrapper">
+        <SkeletonAuthor />
+        <div className="container">
+          <div className="row">
+            {Array(8).fill(0).map((_, index) => (
+              <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
+                <SkeletonCard />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+     if (!author) return <p>Loading author details...</p>;
+
 
   return (
     <div id="wrapper">
