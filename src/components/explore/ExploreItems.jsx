@@ -23,7 +23,7 @@ const ExploreItems = () => {
       setTimeout(() => {
          setExploreItems(data);
         setIsLoading(false);
-      }, 3000);
+      }, 1500);
 
     } catch (err) {
       console.error("Error fetching explore items:", err);
@@ -35,21 +35,26 @@ const ExploreItems = () => {
         getExplore();
       }, []);
 
-      const sortedItems = [...exploreItems].sort((a, b) => {
-        if (filter === "price_low_to_high") {
-          return (a.price - b.price)
-        }
+  
+  const handleSort = (value) => {
+  setFilter(value);
+  setIsLoading(true);
 
-        if (filter === "price_high_to_low") {
-          return (b.price - a.price)
-        }
+  setTimeout(() => {
+    let sorted = [...exploreItems];
 
-        if (filter === "likes_high_to_low") {
-          return (b.likes - a.likes)
-        }
-        return 0;
-      }
-      );
+    if (value === "price_low_to_high") {
+      sorted.sort((a, b) => a.price - b.price);
+    } else if (value === "price_high_to_low") {
+      sorted.sort((a, b) => b.price - a.price);
+    } else if (value === "likes_high_to_low") {
+      sorted.sort((a, b) => b.likes - a.likes);
+    }
+
+    setExploreItems(sorted);
+    setIsLoading(false);
+  }, 800); 
+};
 
     
     const handleLoadMore = () => {
@@ -59,7 +64,7 @@ const ExploreItems = () => {
   return (
     <>
       <div>
-        <select id="filter-items" value={filter} onChange={(event) => setFilter(event.target.value)}>
+        <select id="filter-items" value={filter} onChange={(event) => handleSort(event.target.value)}>
           <option value="">Default</option>
           <option value="price_low_to_high">Price, Low to High</option>
           <option value="price_high_to_low">Price, High to Low</option>
@@ -79,7 +84,7 @@ const ExploreItems = () => {
             </div>
     ))}
 
-      {!isLoading && sortedItems.slice(0, visibleCount).map((exploreItem) => (
+      {!isLoading && exploreItems.slice(0, visibleCount).map((exploreItem) => (
         <div
           key={exploreItem.id}
           className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"

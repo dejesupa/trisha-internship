@@ -2,7 +2,7 @@ import React from "react";
 
 const SkeletonSeller = () => {
   return (
-    <li className="skeleton-seller">
+    <> 
       <div className="skeleton-avatar" />
       <div className="skeleton-text name" />
       <div className="skeleton-text price" />
@@ -56,7 +56,8 @@ const SkeletonSeller = () => {
           100% { transform: translateX(100%); }
         }
       `}</style>
-    </li>
+      </>
+ 
   );
 };
 
