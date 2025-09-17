@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const BrowseByCategory = () => {
   return (
     <section id="section-category" className="no-top">
+      <div data-aos="fade-left">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -49,6 +50,7 @@ const BrowseByCategory = () => {
             </Link>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

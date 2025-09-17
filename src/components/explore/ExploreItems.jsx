@@ -23,7 +23,7 @@ const ExploreItems = () => {
       setTimeout(() => {
          setExploreItems(data);
         setIsLoading(false);
-      }, 3000);
+      }, 1000);
 
     } catch (err) {
       console.error("Error fetching explore items:", err);
